@@ -1,4 +1,4 @@
-module github.com/github.com/Filimonov-ua-d/home_finance_new
+module github.com/Filimonov-ua-d/home_finance_new
 
 go 1.19
 
