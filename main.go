@@ -4,17 +4,15 @@ import (
 	"fmt"
 
 	req "github.com/Filimonov-ua-d/home_finance_new/requests"
+	_ auth "github.com/Filimonov-ua-d/home_finance_new/auth"
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )
 
 func main() {
-	var err error
-	dsn := "user=postgres password=postgres dbname=home_finance sslmode=disable"
-	if req.DB, err = sqlx.Connect("postgres", dsn); err != nil {
-		fmt.Println(err)
-	}
+
+	auth.auth() //authentication
 
 	router := gin.Default()
 	router.POST("/profit/insert", req.InsertProfit)
