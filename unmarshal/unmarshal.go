@@ -19,7 +19,9 @@ func (d *GetMoneyRequest) UnmarshalJSON(data []byte) error {
 	if string(data) == "null" || string(data) == `""` {
 		return nil
 	}
+
 	var v interface{}
+
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}

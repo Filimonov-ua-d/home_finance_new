@@ -2,11 +2,6 @@ package models
 
 import "time"
 
-type GetMoneyResponse struct {
-	Amount int
-	Date   string
-}
-
 type Profit struct {
 	Amount int
 	Source string
@@ -38,7 +33,7 @@ type Expense struct {
 	Amount      int
 }
 
-type Money struct {
+type MoneyItem struct {
 	Amount int
 	Date   time.Time
 }
