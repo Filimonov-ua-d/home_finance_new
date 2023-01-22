@@ -13,6 +13,6 @@ type Repository interface {
 	InsertCredit(ctx context.Context, c *mod.Credit) error
 	InsertSalary(ctx context.Context, s *mod.Salary) error
 	InsertProfit(ctx context.Context, p *mod.Profit) error
-	GetMoneyResponse(ctx context.Context) ([]*mod.GetMoneyResponse, error)
+	GetMoneyResponse(ctx context.Context) ([]*mod.MoneyItem, error)
 	GetExpences(ctx context.Context) ([]*mod.Expense, error)
 }

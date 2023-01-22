@@ -270,8 +270,11 @@ func GetMoney(c *gin.Context) {
 }
 
 func GetExpences(c *gin.Context) {
+
 	selectSQL := "SELECT * FROM expence_items"
+
 	fmt.Println("Get expence items")
+
 	if err := DB.Select(&ExpenceItems, selectSQL); err != nil {
 		fmt.Println(err)
 		c.JSON(http.StatusInternalServerError, err)
@@ -279,4 +282,5 @@ func GetExpences(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, ExpenceItems)
+
 }
