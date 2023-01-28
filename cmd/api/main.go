@@ -3,18 +3,27 @@ package main
 import (
 	"fmt"
 
+	"github.com/Filimonov-ua-d/home_finance_new/config"
 	req "github.com/Filimonov-ua-d/home_finance_new/requests"
+	"github.com/Filimonov-ua-d/home_finance_new/server"
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"github.com/spf13/viper"
 )
 
 func main() {
 
-	var err error
-	dsn := "user=postgres password=postgres dbname=home_finance sslmode=disable"
-	if req.DB, err = sqlx.Connect("postgres", dsn); err != nil {
-		fmt.Println(err)
+	var db *sqlx.DB
+
+	if err := config.Init(); err != nil {
+		return
+	}
+
+	app := server.NewApp(db)
+
+	if err := app.Run(viper.GetString("port")); err != nil {
+		return
 	}
 
 	router := gin.Default()
