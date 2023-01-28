@@ -48,7 +48,7 @@ func (fr *FinancesRepository) InsertProfit(ctx context.Context, p *models.Profit
 	return nil
 }
 
-func (fr *FinancesRepository) InsertDeposit(ctx *context.Context, d *models.Deposit) (err error) {
+func (fr *FinancesRepository) InsertDeposit(ctx context.Context, d *models.Deposit) (err error) {
 
 	var deposit = toDBDeposit(d)
 
@@ -63,7 +63,7 @@ func (fr *FinancesRepository) InsertDeposit(ctx *context.Context, d *models.Depo
 
 }
 
-func (fr *FinancesRepository) InsertSalary(ctx *context.Context, s *models.Salary) (err error) {
+func (fr *FinancesRepository) InsertSalary(ctx context.Context, s *models.Salary) (err error) {
 
 	insertSQL := "insert into salary (amount,date) VALUES (:amount,:date)"
 
@@ -78,7 +78,7 @@ func (fr *FinancesRepository) InsertSalary(ctx *context.Context, s *models.Salar
 
 }
 
-func (fr *FinancesRepository) InsertCredit(ctx *context.Context, c *models.Credit) (err error) {
+func (fr *FinancesRepository) InsertCredit(ctx context.Context, c *models.Credit) (err error) {
 
 	insertSQL := "insert into credit (amount, date, name, description, returndate) VALUES (:amount,:date, :name, :description, :returndate)"
 
@@ -93,7 +93,7 @@ func (fr *FinancesRepository) InsertCredit(ctx *context.Context, c *models.Credi
 
 }
 
-func (fr *FinancesRepository) InsertExpense(c *context.Context, e *models.Expense) (err error) {
+func (fr *FinancesRepository) InsertExpense(c context.Context, e *models.Expense) (err error) {
 
 	insertSQL := "insert into expences (name,amount,date) VALUES (:name,:amount,:date)"
 
@@ -108,7 +108,7 @@ func (fr *FinancesRepository) InsertExpense(c *context.Context, e *models.Expens
 
 }
 
-func (fr *FinancesRepository) InsertExpensesItem(ctx *context.Context, ei *models.ExpensesItem) (err error) {
+func (fr *FinancesRepository) InsertExpensesItem(ctx context.Context, ei *models.ExpensesItem) (err error) {
 
 	insertSQL := "insert into expence_items (name) VALUES (:name)"
 
@@ -123,7 +123,7 @@ func (fr *FinancesRepository) InsertExpensesItem(ctx *context.Context, ei *model
 
 }
 
-func (fr *FinancesRepository) GetExpences(ctx *context.Context) (exp []*models.ExpensesItem, err error) {
+func (fr *FinancesRepository) GetExpences(ctx context.Context) (exp []*models.ExpensesItem, err error) {
 
 	selectSQL := "SELECT * FROM expence_items"
 

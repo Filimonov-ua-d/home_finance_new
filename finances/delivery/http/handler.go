@@ -117,7 +117,7 @@ type getExpItemsResponse struct {
 
 func (h *Handler) GetExpenceItems(c *gin.Context) {
 
-	exp, err := h.useCase.GetExpenceItems(c.Request.Context())
+	exp, err := h.useCase.GetExpences(c.Request.Context())
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		return

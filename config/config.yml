@@ -1,0 +1,9 @@
+port: 8000
+
+postgres:
+ user: "postgres" 
+ password: "postgres"
+ dbname: "home_finance"
+ sslmode: "disable"
+ host: "localhost"
+ port: "8080"
