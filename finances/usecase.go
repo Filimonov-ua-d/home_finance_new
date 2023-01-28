@@ -15,5 +15,5 @@ type UseCase interface {
 	InsertSalary(ctx context.Context, s *mod.Salary) error
 	InsertProfit(ctx context.Context, p *mod.Profit) error
 	GetMoneyOnDate(ctx context.Context, date time.Time) ([]*mod.MoneyItem, error)
-	GetExpenceItems(ctx context.Context) ([]*mod.ExpensesItem, error)
+	GetExpences(ctx context.Context) ([]*mod.ExpensesItem, error)
 }
