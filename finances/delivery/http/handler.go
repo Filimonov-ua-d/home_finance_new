@@ -115,7 +115,7 @@ type getExpItemsResponse struct {
 	Items []*ExpensesItem
 }
 
-func (h *Handler) GetExpenceItems(c *gin.Context) {
+func (h *Handler) GetExpences(c *gin.Context) {
 
 	exp, err := h.useCase.GetExpences(c.Request.Context())
 	if err != nil {
