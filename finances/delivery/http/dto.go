@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/Filimonov-ua-d/home_finance_new/models"
+	"github.com/rs/zerolog/log"
 )
 
 type GetMoneyResponse struct {
@@ -71,6 +72,10 @@ func (d *GetMoneyRequest) UnmarshalJSON(data []byte) error {
 	var v interface{}
 
 	if err := json.Unmarshal(data, &v); err != nil {
+		log.Error().
+			Err(err).
+			Str("package:", "http").
+			Str("Func:", "UnmarshalJSON")
 		return err
 	}
 

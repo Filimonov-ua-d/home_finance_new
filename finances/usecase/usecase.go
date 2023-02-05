@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"github.com/rs/zerolog/log"
+
 	"github.com/Filimonov-ua-d/home_finance_new/finances"
 	"github.com/Filimonov-ua-d/home_finance_new/models"
 )
@@ -13,6 +15,7 @@ type FinancesUseCase struct {
 }
 
 func NewFinanceUseCase(financesRepo finances.Repository) *FinancesUseCase {
+
 	return &FinancesUseCase{
 		financesRepo: financesRepo,
 	}
@@ -27,7 +30,14 @@ func (f *FinancesUseCase) InsertCredit(ctx context.Context, c *models.Credit) er
 		ReturnDate:  c.ReturnDate,
 	}
 
-	return f.financesRepo.InsertCredit(ctx, credit)
+	err := f.financesRepo.InsertCredit(ctx, credit)
+
+	log.Error().
+		Err(err).
+		Str("package:", "usecase").
+		Str("Func:", "InsertCredit")
+
+	return err
 }
 
 func (f *FinancesUseCase) InsertDeposit(ctx context.Context, d *models.Deposit) error {
@@ -39,7 +49,14 @@ func (f *FinancesUseCase) InsertDeposit(ctx context.Context, d *models.Deposit) 
 		Amount:      d.Amount,
 	}
 
-	return f.financesRepo.InsertDeposit(ctx, depo)
+	err := f.financesRepo.InsertDeposit(ctx, depo)
+
+	log.Error().
+		Err(err).
+		Str("package:", "usecase").
+		Str("Func:", "InsertDeposit")
+
+	return err
 }
 
 func (f *FinancesUseCase) InsertExpense(ctx context.Context, e *models.Expense) error {
@@ -50,7 +67,14 @@ func (f *FinancesUseCase) InsertExpense(ctx context.Context, e *models.Expense) 
 		Amount:      e.Amount,
 	}
 
-	return f.financesRepo.InsertExpense(ctx, exp)
+	err := f.financesRepo.InsertExpense(ctx, exp)
+
+	log.Error().
+		Err(err).
+		Str("package:", "usecase").
+		Str("Func:", "InsertExpense")
+
+	return err
 }
 
 func (f *FinancesUseCase) InsertExpensesItem(ctx context.Context, ei *models.ExpensesItem) error {
@@ -59,7 +83,14 @@ func (f *FinancesUseCase) InsertExpensesItem(ctx context.Context, ei *models.Exp
 		Name: ei.Name,
 	}
 
-	return f.financesRepo.InsertExpensesItem(ctx, mei)
+	err := f.financesRepo.InsertExpensesItem(ctx, mei)
+
+	log.Error().
+		Err(err).
+		Str("package:", "usecase").
+		Str("Func:", "InsertExpensesItem")
+
+	return err
 }
 
 func (f *FinancesUseCase) InsertProfit(ctx context.Context, p *models.Profit) error {
@@ -69,7 +100,15 @@ func (f *FinancesUseCase) InsertProfit(ctx context.Context, p *models.Profit) er
 		Date:   p.Date,
 	}
 
-	return f.financesRepo.InsertProfit(ctx, prof)
+	err := f.financesRepo.InsertProfit(ctx, prof)
+
+	log.Error().
+		Err(err).
+		Str("package:", "usecase").
+		Str("Func:", "InsertProfit")
+
+	return err
+
 }
 
 func (f *FinancesUseCase) InsertSalary(ctx context.Context, s *models.Salary) error {
@@ -78,13 +117,34 @@ func (f *FinancesUseCase) InsertSalary(ctx context.Context, s *models.Salary) er
 		Date:   s.Date,
 	}
 
-	return f.financesRepo.InsertSalary(ctx, sal)
+	err := f.financesRepo.InsertSalary(ctx, sal)
+
+	log.Error().
+		Err(err).
+		Str("package:", "usecase").
+		Str("Func:", "InsertSalary")
+
+	return err
 }
 
 func (f *FinancesUseCase) GetExpences(ctx context.Context) ([]*models.ExpensesItem, error) {
-	return f.financesRepo.GetExpences(ctx)
+	c, err := f.financesRepo.GetExpences(ctx)
+
+	log.Error().
+		Err(err).
+		Str("package:", "usecase").
+		Str("Func:", "GetExpences")
+
+	return c, err
 }
 
 func (f *FinancesUseCase) GetMoneyOnDate(ctx context.Context, date time.Time) ([]*models.MoneyItem, error) {
-	return f.financesRepo.GetMoney(ctx, date)
+	c, err := f.financesRepo.GetMoney(ctx, date)
+
+	log.Error().
+		Err(err).
+		Str("package:", "usecase").
+		Str("Func:", "GetMoneyOnDate")
+
+	return c, err
 }

@@ -3,11 +3,12 @@ package server
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/rs/zerolog/log"
 
 	"github.com/Filimonov-ua-d/home_finance_new/finances"
 	dhttp "github.com/Filimonov-ua-d/home_finance_new/finances/delivery/http"
@@ -39,7 +40,11 @@ func NewApp(db *sqlx.DB) *App {
 		user, password, dbname, sslmode, host, port)
 
 	if db, err = sqlx.Connect("postgres", dsn); err != nil {
-		log.Panic("Error DB connect")
+		log.Panic().
+			Err(err).
+			Str("package:", "server").
+			Str("Func:", "NewApp").
+			Msg("DB connection error")
 	}
 
 	financeRepo := pg.NewFinancesRepository(db)
@@ -64,7 +69,10 @@ func (a *App) Run(port string) error {
 
 	go func() {
 		if err := a.httpServer.ListenAndServe(); err != nil {
-			log.Fatalf("Failed to listen and serve: %+v", err)
+			log.Fatal().
+				Err(err).
+				Str("package:", "server").
+				Str("Func:", "Run")
 		}
 	}()
 
