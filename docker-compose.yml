@@ -8,14 +8,26 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: postgres
+    networks:
+        - aaa
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+    networks:
+      - aaa
 
   golang:
     build: .
     ports:
       - 8081:8080
+    depends_on:
+      - db
+      - adminer
+    networks:
+      - aaa
+
+networks:
+  aaa:
