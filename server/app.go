@@ -8,6 +8,7 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 
 	"github.com/Filimonov-ua-d/home_finance_new/finances"
@@ -29,6 +30,20 @@ func NewApp(db *sqlx.DB) *App {
 
 	var err error
 
+	loggerUC := zerolog.New(os.Stdout).
+		With().
+		Timestamp().
+		Str("Layer:", "usecase").
+		Str("Service:", "Home_finances").
+		Logger()
+
+	loggerRepo := zerolog.New(os.Stdout).
+		With().
+		Timestamp().
+		Str("Layer:", "repository").
+		Str("Service:", "Home_finances").
+		Logger()
+
 	user := viper.GetString("postgres.user")
 	password := viper.GetString("postgres.password")
 	dbname := viper.GetString("postgres.dbname")
@@ -47,10 +62,10 @@ func NewApp(db *sqlx.DB) *App {
 			Msg("DB connection error")
 	}
 
-	financeRepo := pg.NewFinancesRepository(db)
+	financeRepo := pg.NewFinancesRepository(db, &loggerRepo)
 
 	return &App{
-		financeUC: fnusecase.NewFinanceUseCase(financeRepo),
+		financeUC: fnusecase.NewFinanceUseCase(financeRepo, &loggerUC),
 	}
 }
 

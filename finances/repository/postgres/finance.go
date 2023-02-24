@@ -6,16 +6,18 @@ import (
 
 	"github.com/Filimonov-ua-d/home_finance_new/models"
 	"github.com/jmoiron/sqlx"
-	"github.com/rs/zerolog/log"
+	"github.com/rs/zerolog"
 )
 
 type FinancesRepository struct {
-	DB *sqlx.DB
+	DB     *sqlx.DB
+	logger *zerolog.Logger
 }
 
-func NewFinancesRepository(db *sqlx.DB) *FinancesRepository {
+func NewFinancesRepository(db *sqlx.DB, logger *zerolog.Logger) *FinancesRepository {
 	return &FinancesRepository{
-		DB: db,
+		DB:     db,
+		logger: logger,
 	}
 }
 
@@ -34,9 +36,8 @@ func (fr *FinancesRepository) InsertProfit(ctx context.Context, p *models.Profit
 
 		tx.Rollback()
 
-		log.Error().
+		fr.logger.Error().
 			Err(err).
-			Str("package:", "postgres").
 			Str("Func:", "InsertProfit(into profit)")
 
 		return err
@@ -47,9 +48,8 @@ func (fr *FinancesRepository) InsertProfit(ctx context.Context, p *models.Profit
 
 		tx.Rollback()
 
-		log.Error().
+		fr.logger.Error().
 			Err(err).
-			Str("package:", "postgres").
 			Str("Func:", "InsertProfit(into money)")
 
 		return err
@@ -58,9 +58,8 @@ func (fr *FinancesRepository) InsertProfit(ctx context.Context, p *models.Profit
 	err = tx.Commit()
 	if err != nil {
 
-		log.Error().
+		fr.logger.Error().
 			Err(err).
-			Str("package:", "postgres").
 			Str("Func:", "InsertProfit(tx.Commit)")
 
 		return err
@@ -78,9 +77,8 @@ func (fr *FinancesRepository) InsertDeposit(ctx context.Context, d *models.Depos
 	_, err = fr.DB.NamedExec(insertSQL, deposit)
 	if err != nil {
 
-		log.Error().
+		fr.logger.Error().
 			Err(err).
-			Str("package:", "postgres").
 			Str("Func:", "InsertDeposit")
 
 		return
@@ -98,10 +96,11 @@ func (fr *FinancesRepository) InsertSalary(ctx context.Context, s *models.Salary
 
 	_, err = fr.DB.NamedExec(insertSQL, salary)
 	if err != nil {
-		log.Error().
+
+		fr.logger.Error().
 			Err(err).
-			Str("package:", "postgres").
 			Str("Func:", "InsertSalary")
+
 		return
 	}
 
@@ -117,10 +116,11 @@ func (fr *FinancesRepository) InsertCredit(ctx context.Context, c *models.Credit
 
 	_, err = fr.DB.NamedExec(insertSQL, credit)
 	if err != nil {
-		log.Error().
+
+		fr.logger.Error().
 			Err(err).
-			Str("package:", "postgres").
 			Str("Func:", "InsertCredit")
+
 		return
 	}
 
@@ -136,10 +136,11 @@ func (fr *FinancesRepository) InsertExpense(c context.Context, e *models.Expense
 
 	_, err = fr.DB.NamedExec(insertSQL, expense)
 	if err != nil {
-		log.Error().
+
+		fr.logger.Error().
 			Err(err).
-			Str("package:", "postgres").
 			Str("Func:", "InsertExpense")
+
 		return
 	}
 
@@ -155,10 +156,11 @@ func (fr *FinancesRepository) InsertExpensesItem(ctx context.Context, ei *models
 
 	_, err = fr.DB.NamedExec(insertSQL, expensesItem)
 	if err != nil {
-		log.Error().
+
+		fr.logger.Error().
 			Err(err).
-			Str("package:", "postgres").
 			Str("Func:", "InsertExpensesItem")
+
 		return
 	}
 
@@ -173,10 +175,11 @@ func (fr *FinancesRepository) GetExpences(ctx context.Context) (exp []*models.Ex
 	var expences []*ExpensesItem
 
 	if err = fr.DB.Select(&expences, selectSQL); err != nil {
-		log.Error().
+
+		fr.logger.Error().
 			Err(err).
-			Str("package:", "postgres").
 			Str("Func:", "GetExpences")
+
 		return
 	}
 
@@ -196,10 +199,11 @@ func (fr *FinancesRepository) GetMoney(ctx context.Context, date time.Time) (mit
 	var moneyItems []*MoneyItem
 
 	if err := fr.DB.Select(&moneyItems, selectSQL, date); err != nil {
-		log.Error().
+
+		fr.logger.Error().
 			Err(err).
-			Str("package:", "postgres").
 			Str("Func:", "GetMoney")
+
 		return nil, err
 	}
 

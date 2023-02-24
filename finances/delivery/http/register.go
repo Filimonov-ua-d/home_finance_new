@@ -1,12 +1,23 @@
 package http
 
 import (
+	"os"
+
 	"github.com/Filimonov-ua-d/home_finance_new/finances"
 	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog"
 )
 
 func RegisterHTTPEndpoints(router *gin.Engine, uc finances.UseCase) {
-	h := NewHandler(uc)
+
+	loggerHandler := zerolog.New(os.Stdout).
+		With().
+		Timestamp().
+		Str("Layer:", "handler").
+		Str("Service:", "Home_finances").
+		Logger()
+
+	h := NewHandler(uc, &loggerHandler)
 
 	router.POST("/profit/insert", h.InsertProfit)
 	router.POST("/salary/insert", h.InsertSalary)
