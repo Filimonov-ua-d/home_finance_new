@@ -31,6 +31,7 @@ func (h *Handler) InsertDeposit(c *gin.Context) {
 			Str("Func:", "InsertDeposit")
 
 		c.String(http.StatusBadRequest, err.Error())
+		return
 	}
 
 	if err := h.useCase.InsertDeposit(c.Request.Context(), toModelDeposit(&deposit)); err != nil {
