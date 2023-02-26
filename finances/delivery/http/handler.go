@@ -58,6 +58,7 @@ func (h *Handler) InsertExpense(c *gin.Context) {
 			Str("Func:", "InsertExpense")
 
 		c.String(http.StatusBadRequest, err.Error())
+		return
 	}
 
 	if err := h.useCase.InsertExpense(c.Request.Context(), toModelExpense(&expense)); err != nil {
@@ -67,6 +68,7 @@ func (h *Handler) InsertExpense(c *gin.Context) {
 			Str("Func:", "InsertExpense")
 
 		c.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	c.Status(http.StatusOK)
@@ -83,6 +85,7 @@ func (h *Handler) InsertExpensesItem(c *gin.Context) {
 			Str("Func:", "InsertExpensesItem")
 
 		c.String(http.StatusBadRequest, err.Error())
+		return
 	}
 
 	if err := h.useCase.InsertExpensesItem(c.Request.Context(), toModelExpenseItem(&expensesItem)); err != nil {
@@ -92,6 +95,7 @@ func (h *Handler) InsertExpensesItem(c *gin.Context) {
 			Str("Func:", "InsertExpensesItem")
 
 		c.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	c.Status(http.StatusOK)
@@ -108,6 +112,7 @@ func (h *Handler) InsertCredit(c *gin.Context) {
 			Str("Func:", "InsertCredit")
 
 		c.String(http.StatusBadRequest, err.Error())
+		return
 	}
 
 	if err := h.useCase.InsertCredit(c.Request.Context(), toModelCredit(&credit)); err != nil {
@@ -117,6 +122,7 @@ func (h *Handler) InsertCredit(c *gin.Context) {
 			Str("Func:", "InsertCredit")
 
 		c.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	c.Status(http.StatusOK)
@@ -134,6 +140,7 @@ func (h *Handler) InsertSalary(c *gin.Context) {
 			Str("Func:", "InsertSalary")
 
 		c.String(http.StatusBadRequest, err.Error())
+		return
 	}
 
 	if err := h.useCase.InsertSalary(c.Request.Context(), toModelSalary(&salary)); err != nil {
@@ -143,6 +150,7 @@ func (h *Handler) InsertSalary(c *gin.Context) {
 			Str("Func:", "InsertSalary")
 
 		c.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	c.Status(http.StatusOK)
@@ -160,6 +168,7 @@ func (h *Handler) InsertProfit(c *gin.Context) {
 			Str("Func:", "InsertProfit")
 
 		c.String(http.StatusBadRequest, err.Error())
+		return
 	}
 
 	if err := h.useCase.InsertProfit(c.Request.Context(), toModelProfit(&profit)); err != nil {
@@ -169,6 +178,7 @@ func (h *Handler) InsertProfit(c *gin.Context) {
 			Str("Func:", "InsertProfit")
 
 		c.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	c.Status(http.StatusOK)
